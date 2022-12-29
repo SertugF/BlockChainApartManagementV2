@@ -8,12 +8,16 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules/
+node/
+
 
 dist
 dist-ssr
 *.local
 
-/smart_contract/node_modules
+
+
+x
 
 # Editor directories and files
 .vscode/*

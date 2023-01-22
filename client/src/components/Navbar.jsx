@@ -17,11 +17,11 @@ const Navbar = () => {
         <img src={logo} alt="logo" className="w-32 cursor-pointer"></img>
       </div>
       <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-        {["Market", "Exchange", "Tutorials", "Wallets"].map((items, index) => (
+        {["Başlangıç", "Servisler", "Destek", "Fiyatlar"].map((items, index) => (
           <NavbarItem key={items + index} title={items} />
         ))}
         <li className="bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd] ">
-          Login
+          Oturum Aç
         </li>
       </ul>
       <div className="flex relative">
@@ -48,7 +48,7 @@ const Navbar = () => {
                 onClick={() => setToggleMenu(false)}
               ></AiOutlineClose>
             </li>
-            {["Market", "Exchange", "Tutorials", "Wallets"].map(
+            {["Başlangıç", "Servisler", "Destek", "Fiyatlar"].map(
               (items, index) => (
                 <NavbarItem
                   key={items + index}

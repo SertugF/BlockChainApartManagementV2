@@ -1,10 +1,14 @@
+import React, { useContext } from "react";
 //import aifill icon, se Etherium
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 
+// import transcationCOntext
+import { TransactionContext } from "../context/TransactionContext";
 // import loader
 import { Loader } from "./";
+import {shortenAddress} from '../utils/shortenAddress'
 
 const commonStyles =
   "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
@@ -22,38 +26,60 @@ const Input = ({ placeholder, name, type, handleChange, value }) => (
 );
 
 const Welcome = () => {
-  const connectWallet = () => {
-    console.log("connect wallet"); // will be replaced by metamask
-  };
+  const {
+    connectWallet,
+    currentAccount,
+    formData,
+    handleChange,
+    sendTransaction,
+  } = useContext(TransactionContext); // test
 
-  const handleSubmit = () => {
-    console.log("submit"); // will be replaced by metamask
+  const handleSubmit = (e) => {
+    const { addressTo, amount, keyword, message } = formData;
+
+    e.preventDefault(); // prevent default behaviour of form. eg. dont let refresh page
+
+    if (addressTo && amount && keyword && message) {
+      // if all fields are filled
+      // send data to backend
+      sendTransaction();
+      console.log("send data to backend");
+    } else {
+      return;
+      console.log("please fill all fields");
+    }
   };
   return (
     <div className="flex w-full justify-center items-center">
       <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">
         <div className="flex flex-1 justify-start flex-col mf:mr-10">
           <h1 className="text-3xl sm:text-5xl text-white text-gradient py-4">
-            Send Crypto <br /> accross the globe
+            Blockchain teknolojisi ile <br /> dünyanın her yanından apartman aidat ödemelerinizi alın
           </h1>
           <p className="text-left text-white mt-5 font-light md:w-9/12 w-11/12 text-base">
-            Explore the crypto world. Buy and sell cryptocurrencies easily.
+            Kripto dünyasını keşfedin hızlıca ödeme işlemlerinizi gerçekleştirin
           </p>
-          <button
-            type="button"
-            onClick={connectWallet}
-            className="flex flex-row justify-center items-center my-5
+
+          {!currentAccount && (
+            <button
+              type="button"
+              onClick={connectWallet}
+              className="flex flex-row justify-center items-center my-5
             bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
-          >
-            <p className="text-white text-base font-semibold">Connect Wallet</p>
-          </button>
+            >
+              <p className="text-white text-base font-semibold">
+                Cüzdana bağlan
+              </p>
+            </button>
+          )}
+
           <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
-            <div className={`rounded-t1-2xl ${commonStyles}`}>Reliability</div>
-            <div className={commonStyles}>Security</div>
+            <div className={`rounded-t1-2xl ${commonStyles}`}>BlockChain</div>
+            <div className={commonStyles}>Web 3.0</div>
             <div className={`rounded-tr-2xl ${commonStyles}`}>Ethereum</div>
-            <div className={`rounded-bl-2xl ${commonStyles}`}>Web 3.0</div>
-            <div className={commonStyles}>Low Fees</div>
-            <div className={`rounded-br-2xl ${commonStyles}`}>BlockChain</div>
+            <div className={`rounded-bl-2xl ${commonStyles}`}>Güvenlik</div>
+            <div className={commonStyles}>Düşük işlem ücretleri</div>
+            <div className={`rounded-br-2xl ${commonStyles}`}>Güvenilirlik</div>
           </div>
         </div>
 
@@ -68,7 +94,7 @@ const Welcome = () => {
                 <BsInfoCircle fontSize={17} color="#fff" />
               </div>
               <div>
-                <p className="text-white font-light text-sm">0X0000x0Address</p>
+                <p className="text-white font-light text-sm">{shortenAddress( currentAccount)}</p>
                 <p className="text-white font-semibold text-lg mt-1">
                   Ethereum
                 </p>
@@ -78,28 +104,28 @@ const Welcome = () => {
           <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
             {/* Blue Stuff Under Card, form start*/}
             <Input
-              placeholder="Address To"
+              placeholder="Gönderilecek adres"
               name="addressTo"
               type="text"
-              handleChange={() => {}}
+              handleChange={handleChange}
             />
             <Input
-              placeholder="Amount (ETH)"
+              placeholder="Miktar (ETH)"
               name="amount"
               type="number"
-              handleChange={() => {}}
+              handleChange={handleChange}
             />
             <Input
-              placeholder="Keyword(GIF)"
+              placeholder="Apartman İsmi"
               name="keyword"
               type="text"
-              handleChange={() => {}}
+              handleChange={handleChange}
             />
             <Input
-              placeholder="Enter Message"
+              placeholder="Not yazın"
               name="message"
               type="text"
-              handleChange={() => {}}
+              handleChange={handleChange}
             />
             {/* Creates line under form*/}
             <div className="h-[1px] w-full bg-gray-400 my-2 " />
@@ -112,7 +138,7 @@ const Welcome = () => {
                 onClick={handleSubmit}
                 className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] rounded-full cursor-pointer"
               >
-                Send Now
+                Şimdi gönder
               </button>
             )}
           </div>

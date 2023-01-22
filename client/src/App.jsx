@@ -1,4 +1,5 @@
-import { Navbar, Welcome, Footer, Services, Transactions } from "./components";
+// import { Navbar, Welcome, Footer, Services, Transactions } from "./components";
+import { Navbar, Welcome} from "./components";
 
 const App = () => {
   return (
@@ -7,10 +8,11 @@ const App = () => {
       <div className="gradient-bg-welcome">
         <Navbar />
         <Welcome />
+        {/* <Signin/> */}
       </div>
-      <Services />
-      <Transactions />
-      <Footer />
+      {/* <Services />
+      <Transactions / şimdilik hepsi iptal>
+      <Footer /> */}
     </div>
   );
 };
